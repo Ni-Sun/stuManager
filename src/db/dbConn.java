@@ -1,6 +1,9 @@
 package db;
 
 import java.sql.*;
+import java.util.*;
+import java.io.InputStream;
+import java.io.IOException;
 
 /**
  * 
@@ -19,27 +22,59 @@ public class dbConn {
 		}
 	}
 
+//	private Statement conn() {
+//		try {
+//			// 加载驱动
+////			Class.forName("com.mysql.jdbc.Driver");
+//			Class.forName("com.mysql.cj.jdbc.Driver");
+//
+//			// 数据库名称，管理员账号、密码
+////			String url = "jdbc:mysql://localhost:3306/stuManagerDB";
+//			String url = "jdbc:mysql://localhost:3306/stuManagerDB?useSSL=false&serverTimezone=Asia/Shanghai";
+//			String user = "root";
+//			String pwd = "f1e3b269501rn";
+//
+//			// 连接
+//			Connection con = null;
+//			con = DriverManager.getConnection(url, user, pwd);
+//			Statement stat = con.createStatement();
+//			return stat;
+//		} catch (ClassNotFoundException ex) {
+//			return null;
+//		} catch (SQLException ex1) {
+//			return null;
+//		}
+//	}
+
+
 	private Statement conn() {
 		try {
+			// 加载配置文件
+			Properties prop = new Properties();
+			InputStream input = getClass().getClassLoader().getResourceAsStream("./db/config.properties");
+			if (input == null) {
+				throw new RuntimeException("找不到配置文件 config.properties");
+			}
+			prop.load(input);
+
 			// 加载驱动
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// 数据库名称，管理员账号、密码
-			String url = "jdbc:mysql://localhost:3306/stuManagerDB";
+			// 获取配置信息
+			String url = "jdbc:mysql://localhost:3306/stuManagerDB?useSSL=false&serverTimezone=Asia/Shanghai";
 			String user = "root";
-			String pwd = "123";
+			String pwd = prop.getProperty("db.password");
 
-			// 连接
-			Connection con = null;
-			con = DriverManager.getConnection(url, user, pwd);
-			Statement stat = con.createStatement();
-			return stat;
-		} catch (ClassNotFoundException ex) {
-			return null;
-		} catch (SQLException ex1) {
-			return null;
+			// 建立连接
+			Connection con = DriverManager.getConnection(url, user, pwd);
+			return con.createStatement();
+		} catch (ClassNotFoundException | SQLException | IOException e) {
+			// 建议记录日志而不是返回null
+			e.printStackTrace();
+			throw new RuntimeException("数据库连接失败", (Throwable) e);
 		}
 	}
+
 
 	// 查询数据库
 	public ResultSet getRs(String sql) {

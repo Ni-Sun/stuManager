@@ -1,0 +1,24 @@
+# 配置文件
+src/db/config.properties
+
+# 编译输出目录
+*.class
+*.jar
+target/
+build/
+out/
+
+# IDE 相关文件
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# 日志文件
+*.log
+
+# 临时文件
+*.tmp
+*.temp
+.DS_Store
