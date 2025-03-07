@@ -22,31 +22,6 @@ public class dbConn {
 		}
 	}
 
-//	private Statement conn() {
-//		try {
-//			// 加载驱动
-////			Class.forName("com.mysql.jdbc.Driver");
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//
-//			// 数据库名称，管理员账号、密码
-////			String url = "jdbc:mysql://localhost:3306/stuManagerDB";
-//			String url = "jdbc:mysql://localhost:3306/stuManagerDB?useSSL=false&serverTimezone=Asia/Shanghai";
-//			String user = "root";
-//			String pwd = "f1e3b269501rn";
-//
-//			// 连接
-//			Connection con = null;
-//			con = DriverManager.getConnection(url, user, pwd);
-//			Statement stat = con.createStatement();
-//			return stat;
-//		} catch (ClassNotFoundException ex) {
-//			return null;
-//		} catch (SQLException ex1) {
-//			return null;
-//		}
-//	}
-
-
 	private Statement conn() {
 		try {
 			// 加载配置文件
